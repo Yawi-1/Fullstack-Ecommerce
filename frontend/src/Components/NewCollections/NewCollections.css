@@ -1,0 +1,23 @@
+.newCollections{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+.newCollections hr{
+    width: 200px;
+    height: 6px;
+    background: #252525;
+    border-radius: 15px;
+}
+.newCollections h1{
+    color: #171711;
+    font-size: 50px;
+    font-weight: 600;
+}
+.collections{
+    display: flex;
+    flex-wrap: wrap;
+    gap:30px;
+    justify-content: center;
+}
