@@ -21,7 +21,6 @@ const AddProduct = () => {
   const addProduct = async () => {
     let responseData;
     let product = productDetails;
-    console.log(productDetails);
     let formData = new FormData();
     formData.append("product", image);
     await fetch("http://localhost:4000/upload", {
@@ -49,6 +48,14 @@ const AddProduct = () => {
         .then((res) => res.json())
         .then((data) => {
           data.success?alert("Product Added Successfully"):alert("Product Not Added");
+          setProductDetails({
+            name: "",
+            image: "",
+            category: "women",
+            new_price: "",
+            old_price: "",
+          });
+          setImage(false);
         });
     }
   };

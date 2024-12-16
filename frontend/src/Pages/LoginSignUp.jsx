@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Css/LoginSignup.css";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
 const LoginSignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [state, setState] = useState("Log In");
@@ -16,7 +17,6 @@ const LoginSignUp = () => {
   };
 
   const login = async () => {
-    console.log("Log in ", formData);
     let responseData;
     await fetch("http://localhost:4000/login", {
       method: "POST",
@@ -30,10 +30,12 @@ const LoginSignUp = () => {
       .then((data) => {
         responseData = data;
       });
-      console.log(responseData);
       if(responseData.success){
         localStorage.setItem("auth-token", responseData.token);
-        window.location.replace("/");
+        toast.success("Login successfully.........")
+        setTimeout(()=>{
+          window.location.replace("/");
+        },1000)
       }
       else{
         alert(responseData.errors);
@@ -57,7 +59,12 @@ const LoginSignUp = () => {
       console.log(responseData);
       if(responseData.success){
         localStorage.setItem("auth-token", responseData.authToken);
-        window.location.replace("/");
+        toast.success("Sign Up SuccessFUll.......")
+
+        setTimeout(()=>{
+
+          window.location.replace("/");
+        },1000)
       }
       else{
         alert(responseData.errors);

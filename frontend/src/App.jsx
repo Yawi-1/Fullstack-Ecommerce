@@ -1,6 +1,8 @@
 import React from "react";
 import Navbar from "./Components/Navbar/Navbar";
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Shop from "./Pages/Shop";
 import Cart from "./Pages/Cart";
 import Product from "./Pages/Product";
@@ -10,6 +12,7 @@ import Footer from "./Components/Footer/Footer";
 import kids_banner from "./Components/Assets/banner_kids.png";
 import men_banner from "./Components/Assets/banner_mens.png";
 import women_banner from "./Components/Assets/banner_women.png";
+import ChatBot from "./Components/ChatBot/ChatBot";
 const App = () => {
   return (
     <>
@@ -35,6 +38,8 @@ const App = () => {
         <Route path="/login" element={<LoginSignUp />} />
       </Routes>
       <Footer />
+      <ChatBot/>
+      <ToastContainer/>
     </>
   );
 };

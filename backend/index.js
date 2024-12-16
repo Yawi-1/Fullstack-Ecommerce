@@ -8,10 +8,13 @@ const cors = require("cors");
 const productModel = require('./database/product.js'); // Importing the product model
 const upload = require('./multer.js'); // Importing multer configuration
 const Users = require('./database/users.js');
+const { NlpManager } = require("@nlpjs/nlp");
+
 
 app.use(express.json()); // Middleware to parse incoming JSON data
 app.use(cors()); // Middleware to enable CORS
 app.use('/images', express.static('upload/images')); // Middleware to serve static files
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Express App is Running");
@@ -186,11 +189,43 @@ app.post('/removefromcart',fetchUser,async(req,res)=>{
     await Users.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData})
     res.send('Removed');
 })
+
+
+
+// code for chatbot...........
+const manager = new NlpManager({ languages: ["en"] });
+manager.addDocument("en", "hello", "greet");
+manager.addDocument("en", "how are you", "ask_wellbeing");
+manager.addAnswer("en", "greet", "Hello! How can I assist you?");
+manager.addAnswer("en", "ask_wellbeing", "I'm just a bot, but I'm doing great!");
+manager.train().then(() => manager.save());
 //creating endpoint for get cart
 app.post('/getcart',fetchUser,async(req,res)=>{
     let userData = await Users.findOne({_id:req.user.id});
     res.json(userData.cartData);
 })
+
+// Creating endpoint for chat bot
+
+app.post('/chat', async (req, res) => {
+    const { message } = req.body; // Get the message from the request body
+    if (!message) {
+        return res.status(400).json({ success: false, message: "No message provided" });
+    }
+
+    try {
+        const response = await manager.process("en", message); // Process the message
+        res.json({ success: true, reply: response.answer || "Sorry, I didn't understand that." });
+    } catch (error) {
+        console.error("Error in chatbot:", error);
+        res.status(500).json({ success: false, message: "Chatbot processing error" });
+    }
+});
+
+
+
+
+
 
 // Start the server
 app.listen(port, () => {

@@ -5,7 +5,7 @@
     background: rgb(215, 130, 130);
     width: 65%;
     padding: 0px 140px;
-    background: linear-gradient(180deg,#fde1ff 0%, #e1ffea22 60%);
+    background: linear-gradient(180deg,#ecec0a,#cfee0a22 60%);  
 }
 .offers-left{
     flex: 1;
